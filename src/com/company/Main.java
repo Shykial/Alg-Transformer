@@ -61,10 +61,11 @@ public class Main {
 //
 //        System.out.println(movvess);
         String moves6 = "[L2 U Rw2 y2, L' U2 x' F L']";
-        String moves5 = "[L2 U Rw2 F, L' U2 x' F L']";
+        String moves10 = "[L2 U Rw2 F, L' U2 x' F L']";
         String moves7 = "[L2 U r', L' U2 x' Bw z L']";
         String moves8 = "M2 U' M, U";
         String moves9 = "L2 Dw' E x' U M2 Rw L S' M2 D L' r";
+        String moves5 ="R U R' U' R U R' U'";
 
         System.out.println();
         System.out.println("String wprowadzony: " + '\t' + moves5);

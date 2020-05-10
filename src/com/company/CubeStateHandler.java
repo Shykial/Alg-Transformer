@@ -184,7 +184,7 @@ public class CubeStateHandler extends BasicTurnOperations {
 
     public void countIncorrectElements(){
         for (Map.Entry<String, char[]> el : corners.entrySet()) {
-            if (el.getValue() != solvedCorners.get(el.getKey())) {
+            if (!Arrays.equals(el.getValue(),solvedCorners.get(el.getKey()))) {
                 char[] temp1 = el.getValue().clone();
                 char[] temp2 = solvedCorners.get(el.getKey()).clone();
                 Arrays.sort(temp1);
@@ -195,7 +195,7 @@ public class CubeStateHandler extends BasicTurnOperations {
         }
 
         for(Map.Entry<String, char[]> el : edges.entrySet()) {
-            if(el.getValue() != solvedEdges.get(el.getKey())) {
+            if(!Arrays.equals(el.getValue(),solvedEdges.get(el.getKey()))) {
                 char[] temp1 = el.getValue().clone();
                 char[] temp2 = solvedEdges.get(el.getKey()).clone();
                 Arrays.sort(temp1);
