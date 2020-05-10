@@ -59,7 +59,7 @@ public class CubeStateHandler extends BasicTurnOperations {
 
         if (corners.length != edges.length)
             throw new RuntimeException("number of corners doesn't match number of edges");
-        System.out.println("test2");
+
         if (degreeFlag == 2) {
             for (int i = 0; i < corners.length; i++) {
                 tempCorners[i] = this.corners.get(corners[i]);
@@ -106,14 +106,19 @@ public class CubeStateHandler extends BasicTurnOperations {
 //            System.arraycopy(newElements, 0, elements, 0, newElements.length);
 //        }
 
-        for (int i = 0; i < tempCorners.length; i++) {
-            if (degreeFlag < 0) {
-                this.corners.replace(corners[i], tempCorners[(tempCorners.length - i) % tempCorners.length]);
-                this.edges.replace(corners[i], tempEdges[(tempEdges.length - i) % tempEdges.length]);
-            } else {
-                this.corners.replace(corners[i], tempCorners[(i + degreeFlag) % tempCorners.length]); // replaces this.corners with corners[i] key by i-th + degreeFlag value corrected by size of temp Corners
-                this.edges.replace(edges[i], tempEdges[(i + degreeFlag) % tempEdges.length]);
+        try {
+            for (int i = 0; i < tempCorners.length; i++) {
+                if (i - degreeFlag < 0) {
+                    this.corners.replace(corners[i], tempCorners[(i + tempCorners.length - degreeFlag) % tempCorners.length]);
+                    this.edges.replace(edges[i], tempEdges[(i + tempCorners.length - degreeFlag) % tempEdges.length]);
+                } else {
+                    this.corners.replace(corners[i], tempCorners[(i - degreeFlag) % tempCorners.length]); // replaces this.corners with corners[i] key by i-th + degreeFlag value corrected by size of temp Corners
+                    this.edges.replace(edges[i], tempEdges[(i - degreeFlag) % tempEdges.length]);
+                }
+                //i - degreeFlag
             }
+        } catch (Exception e) {
+            throw new RuntimeException("Replacing cube state elements exception");
         }
     }
 
