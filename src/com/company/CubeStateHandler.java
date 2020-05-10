@@ -6,10 +6,14 @@ public class CubeStateHandler extends BasicTurnOperations {
 //    String[] corners;
 //    String[] edges;
 
-    HashMap<String, char[]> solvedCorners = new HashMap<>();
-    HashMap<String, char[]> solvedEdges = new HashMap<>();
-    HashMap<String, char[]> corners;
-    HashMap<String, char[]> edges;
+    private HashMap<String, char[]> solvedCorners = new HashMap<>();
+    private HashMap<String, char[]> solvedEdges = new HashMap<>();
+    private HashMap<String, char[]> corners;
+    private HashMap<String, char[]> edges;
+    private int incorrectCorners = 0;
+    private int incorrectEdges = 0;
+    private int twistedCorners = 0;
+    private int flippedEdges = 0;
 
     public CubeStateHandler() {
         // U face corners:
@@ -97,15 +101,6 @@ public class CubeStateHandler extends BasicTurnOperations {
             }
         }
 
-//            for (int i = 0; i < elements.length; i++) {
-//                if (i + degreeFlag >= elements.length)
-//                    newElements[i] = elements[(i + degreeFlag - elements.length) % 4];
-//                else newElements[i] = elements[i + degreeFlag];
-//            }
-//
-//            System.arraycopy(newElements, 0, elements, 0, newElements.length);
-//        }
-
         try {
             for (int i = 0; i < tempCorners.length; i++) {
                 if (i - degreeFlag < 0) {
@@ -115,7 +110,6 @@ public class CubeStateHandler extends BasicTurnOperations {
                     this.corners.replace(corners[i], tempCorners[(i - degreeFlag) % tempCorners.length]); // replaces this.corners with corners[i] key by i-th + degreeFlag value corrected by size of temp Corners
                     this.edges.replace(edges[i], tempEdges[(i - degreeFlag) % tempEdges.length]);
                 }
-                //i - degreeFlag
             }
         } catch (Exception e) {
             throw new RuntimeException("Replacing cube state elements exception");
@@ -171,4 +165,55 @@ public class CubeStateHandler extends BasicTurnOperations {
             affectCubeState(move);
         }
     }
+
+    public int getIncorrectCorners() {
+        return incorrectCorners;
+    }
+
+    public int getIncorrectEdges() {
+        return incorrectEdges;
+    }
+
+    public int getTwistedCorners() {
+        return twistedCorners;
+    }
+
+    public int getFlippedEdges() {
+        return flippedEdges;
+    }
+
+    public void countIncorrectElements(){
+        for (Map.Entry<String, char[]> el : corners.entrySet()) {
+            if (el.getValue() != solvedCorners.get(el.getKey())) {
+                char[] temp1 = el.getValue().clone();
+                char[] temp2 = solvedCorners.get(el.getKey()).clone();
+                Arrays.sort(temp1);
+                Arrays.sort(temp2);
+                if (Arrays.equals(temp1, temp2)) twistedCorners++;
+                else incorrectCorners++;
+            }
+        }
+
+        for(Map.Entry<String, char[]> el : edges.entrySet()) {
+            if(el.getValue() != solvedEdges.get(el.getKey())) {
+                char[] temp1 = el.getValue().clone();
+                char[] temp2 = solvedEdges.get(el.getKey()).clone();
+                Arrays.sort(temp1);
+                Arrays.sort(temp2);
+                if (Arrays.equals(temp1, temp2)) flippedEdges++;
+                else incorrectEdges++;
+            }
+        }
+    }
+
+    public String getIncorrectElementsString() {
+        countIncorrectElements();
+        StringBuilder sb = new StringBuilder();
+        if (incorrectEdges > 0) sb.append(incorrectEdges).append("e");
+        if (flippedEdges > 0) sb.append(flippedEdges).append("te");
+        if (incorrectCorners > 0) sb.append(incorrectCorners).append("c");
+        if (twistedCorners > 0) sb.append(twistedCorners).append("tc");
+        return sb.toString();
+    }
+
 }

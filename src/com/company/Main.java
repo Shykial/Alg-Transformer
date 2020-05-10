@@ -80,6 +80,7 @@ public class Main {
 
         System.out.print(ir.getCurrentRotation());
         System.out.print(" (" + newMoves.size() + ")");
+        System.out.print(" - " + csh.getIncorrectElementsString());
         System.out.println();
         System.out.println("Kancelacja " + x + " ruchow!!!");
 
