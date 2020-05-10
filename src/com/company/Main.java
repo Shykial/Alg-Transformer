@@ -16,6 +16,7 @@ public class Main {
        // HashMap hm = new HashMap();
 
         InputReader ir = new InputReader();
+        CubeStateHandler csh = new CubeStateHandler();
 //        CubeStateHandler_OLD csh = new CubeStateHandler_OLD();
 //        csh.affectCubeState("F'");
 
@@ -59,8 +60,8 @@ public class Main {
 //        ir.movesCanceller(movvess);
 //
 //        System.out.println(movvess);
-        String moves5 = "[L2 U Rw2 y2, L' U2 x' F L']";
-        String moves6 = "[L2 U r', L' U2 x' b z L']";
+        String moves6 = "[L2 U Rw2 y2, L' U2 x' F L']";
+        String moves5 = "[L2 U r', L' U2 x' Bw z L']";
         String moves8 = "M2 U' M, U";
         String moves9 = "L2 Dw' E x' U M2 Rw L S' M2 D L' r";
 
@@ -71,6 +72,7 @@ public class Main {
         ArrayList<String> newMoves = ir.readInput(moves5);
 
         int x = ir.movesCanceller(newMoves);
+        csh.affectCubeState(newMoves);
         System.out.println();
         System.out.print("String po poteznych skroceniach a'la Jeziorski: \t");
         for (String move : newMoves) System.out.print(move + " ");
@@ -81,6 +83,9 @@ public class Main {
         System.out.println("Kancelacja " + x + " ruchow!!!");
 
         System.out.println();
+
+        System.out.println("Obecny cube state:");
+        csh.displayCubeState();
         long stopTime = System.nanoTime();
         double TotalTime = (stopTime - startTime) * 0.000000001;
         System.out.println("Execution time: " + TotalTime);

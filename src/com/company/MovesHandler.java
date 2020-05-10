@@ -72,7 +72,6 @@ public class MovesHandler extends BasicTurnOperations {
                 throw new IllegalArgumentException("affect cube rotation state array parameter exception");
 
         }
-
         //return affectedCRS;
         System.arraycopy(affectedCRS, 0, CRS, 0, CRS.length);
     }
