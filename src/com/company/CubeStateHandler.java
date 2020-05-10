@@ -105,7 +105,7 @@ public class CubeStateHandler extends BasicTurnOperations {
 //
 //            System.arraycopy(newElements, 0, elements, 0, newElements.length);
 //        }
-
+        System.out.println("test");
         for (int i = 0; i < tempCorners.length; i++) {
             if (degreeFlag < 0) {
                 this.corners.replace(corners[i], tempCorners[(tempCorners.length - i) % tempCorners.length]);
