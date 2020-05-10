@@ -59,7 +59,7 @@ public class CubeStateHandler extends BasicTurnOperations {
 
         if (corners.length != edges.length)
             throw new RuntimeException("number of corners doesn't match number of edges");
-
+        System.out.println("test2");
         if (degreeFlag == 2) {
             for (int i = 0; i < corners.length; i++) {
                 tempCorners[i] = this.corners.get(corners[i]);
@@ -105,7 +105,7 @@ public class CubeStateHandler extends BasicTurnOperations {
 //
 //            System.arraycopy(newElements, 0, elements, 0, newElements.length);
 //        }
-        System.out.println("test");
+
         for (int i = 0; i < tempCorners.length; i++) {
             if (degreeFlag < 0) {
                 this.corners.replace(corners[i], tempCorners[(tempCorners.length - i) % tempCorners.length]);
