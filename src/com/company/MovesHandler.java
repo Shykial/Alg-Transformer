@@ -111,11 +111,11 @@ public class MovesHandler extends BasicTurnOperations {
 
     //   public
 
-    public void middleLayerMovesHandler(StringBuilder move, ArrayList<String> moves, RotationHandler rh) {
+    public void middleLayerMovesHandler(String move, ArrayList<String> moves, RotationHandler rh) {
         String moveFlag;
         String oppositeMoveFlag;
 
-        switch (getDegreeFlag(move.toString())) {
+        switch (getDegreeFlag(move)) {
             case 1:
                 moveFlag = "";
                 oppositeMoveFlag = "'";

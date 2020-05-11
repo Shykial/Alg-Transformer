@@ -6,10 +6,10 @@ public class CubeStateHandler extends BasicTurnOperations {
 //    String[] corners;
 //    String[] edges;
 
-    private HashMap<String, char[]> solvedCorners = new HashMap<>();
-    private HashMap<String, char[]> solvedEdges = new HashMap<>();
-    private HashMap<String, char[]> corners;
-    private HashMap<String, char[]> edges;
+    private final HashMap<String, char[]> solvedCorners = new HashMap<>();
+    private final HashMap<String, char[]> solvedEdges = new HashMap<>();
+    private final HashMap<String, char[]> corners;
+    private final HashMap<String, char[]> edges;
     private int incorrectCorners = 0;
     private int incorrectEdges = 0;
     private int twistedCorners = 0;
@@ -164,22 +164,6 @@ public class CubeStateHandler extends BasicTurnOperations {
         for (String move : moves) {
             affectCubeState(move);
         }
-    }
-
-    public int getIncorrectCorners() {
-        return incorrectCorners;
-    }
-
-    public int getIncorrectEdges() {
-        return incorrectEdges;
-    }
-
-    public int getTwistedCorners() {
-        return twistedCorners;
-    }
-
-    public int getFlippedEdges() {
-        return flippedEdges;
     }
 
     public void countIncorrectElements(){

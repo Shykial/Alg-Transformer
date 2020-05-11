@@ -43,7 +43,13 @@ public class InputReader {
         return originalSize - moves.size();
     }
 
-    public String commExpander(String moves) {
+//    public String algExpander(String moves) {
+//        return "";
+//
+//    }
+
+
+    public ArrayList<String> commExpander(String moves) {
         ArrayList<String> firstPartArray;
         ArrayList<String> secondPartArray;
 
@@ -53,92 +59,73 @@ public class InputReader {
 
         firstPartArray = movesStringToArray(firstPart);
         secondPartArray = movesStringToArray(secondPart);
-
-        //movesCanceller(secondPartArray);
-
-        StringBuilder expandedComm = new StringBuilder();
-
-        for (String move : firstPartArray) expandedComm.append(move).append(' ');
-        for (String move2 : secondPartArray) expandedComm.append(move2).append(' ');
+//
+//        StringBuilder expandedComm = new StringBuilder();
+//
+//        for (String move : firstPartArray) expandedComm.append(move).append(' ');
+//        for (String move2 : secondPartArray) expandedComm.append(move2).append(' ');
+//
+//        for (int i = firstPartArray.size() - 1; i >= 0; i--)
+//            expandedComm.append(mh.getOppositeMove(firstPartArray.get(i))).append(' ');
+//
+//        for (int i = secondPartArray.size() - 1; i >= 0; i--) {
+//            expandedComm.append(mh.getOppositeMove(secondPartArray.get(i)));
+//            if (i != 0) expandedComm.append(' ');
+//        }
+//
+//        return expandedComm.toString();
+        ArrayList<String> expandedComm = new ArrayList<>();
+        expandedComm.addAll(firstPartArray);
+        expandedComm.addAll(secondPartArray);
 
         for (int i = firstPartArray.size() - 1; i >= 0; i--)
-            expandedComm.append(mh.getOppositeMove(firstPartArray.get(i))).append(' ');
+            expandedComm.add(mh.getOppositeMove(firstPartArray.get(i)));
 
-        for (int i = secondPartArray.size() - 1; i >= 0; i--) {
-            expandedComm.append(mh.getOppositeMove(secondPartArray.get(i)));
-            if (i != 0) expandedComm.append(' ');
-        }
 
-        return expandedComm.toString();
+        for (int i = secondPartArray.size() - 1; i >= 0; i--)
+            expandedComm.add(mh.getOppositeMove(secondPartArray.get(i)));
+
+        return expandedComm;
     }
 
     public ArrayList<String> readInput(String moves) {
 
         rh.clearCurrentRotation();
-
-        StringBuilder Move = new StringBuilder();
-        //StringBuilder Turn = new StringBuilder();
         String rotationsString = "xyz";
         String turnsString = "RLFBUDrlfbudMES";
         String wideMovesString = turnsString.substring(6, 12);
         String middleLayerMovesString = turnsString.substring(12);
-        //StringBuilder NewMovesString = new StringBuilder();
+        String[] Moves;
         ArrayList<String> NewMoves = new ArrayList<>();
 
-        if (moves.contains(",")) moves = commExpander(moves);
-        for (int i = 0; i < moves.length(); i++) {
+        if (moves.contains(",")) Moves = commExpander(moves).toArray(new String[0]);
+        else Moves = movesStringToArray(moves).toArray(new String[0]);
 
-            //if (i == moves.length() - 1 && Move.toString().equals("")) Move.append(moves.charAt(i));
+        for (String move : Moves) {
 
-            //System.out.println("obecny ruch to: "+currentMove);
-            if ((moves.charAt(i) == ' ' || moves.charAt(i) == ',' || i == moves.length() - 1)) {
-                if (i == moves.length() - 1) Move.append(moves.charAt(i));
+            if (rotationsString.contains(String.valueOf(move.charAt(0))))
+                rh.affectCurrentRotation(move);
 
-                ///rotacja
-                if (rotationsString.contains(String.valueOf(Move.charAt(0)))) {
-                    //System.out.println("dodaje rotacje "+Move);
-                    rh.affectCurrentRotation(Move.toString());
-                    //System.out .println("znak "+ (i + 1) + ", obecna rotacja to: " + rh.getCurrentRotation());
+
+            if (turnsString.contains(String.valueOf(move.charAt(0)))) {
+
+                if (middleLayerMovesString.contains(String.valueOf(move.charAt(0)))) {
+                    mh.middleLayerMovesHandler(move, NewMoves, rh);
+                    continue;
                 }
 
-                ///ruch
-                if (turnsString.contains(String.valueOf(Move.charAt(0)))) {
-                    //  System.out.println("iteracja: "+i);
+                if (move.contains("w") || wideMovesString.contains(String.valueOf(move.charAt(0))))
+                    move = mh.wideMovesHandler(move, rh);
 
-
-                    //if (i == moves.length() - 1) Move.append(moves.charAt(i));
-
-                    if (middleLayerMovesString.contains(String.valueOf(Move.charAt(0))))
-                    {
-                        mh.middleLayerMovesHandler(Move, NewMoves, rh);
-                        Move = new StringBuilder();
-                        continue;
-                    }
-
-                    if (Move.toString().contains("w") || wideMovesString.contains(String.valueOf(Move.charAt(0))))
-                        Move = new StringBuilder(mh.wideMovesHandler(Move.toString(), rh));
-
-               //     else if (middleLayerMovesString.contains(String.valueOf(Move.charAt(0))))
-
-                    if (rh.getCurrentRotation().length() > 0) {
-                        StringBuilder temp = new StringBuilder();
-                        temp.append(mh.affectTurn(Move.toString(), rh));
-                        Move = temp;
-                    }
-
-//                    if (NewMovesString.length() > 0) NewMovesString.append(" ");
-//                    NewMovesString.append(Move);
-                    NewMoves.add(Move.toString());
+                if (rh.getCurrentRotation().length() > 0) {
+                    move = mh.affectTurn(move, rh);
                 }
 
-                Move = new StringBuilder();
-            } else Move.append(moves.charAt(i));
-            //  System.out .println("znak "+ (i + 1) + ", obecna rotacja to: " + rh.getCurrentRotation());
-            // System.out .println("znak "+ (i + 1) + ", obecny ruch to: " + Move);
+                NewMoves.add(move);
+            }
 
         }
-        //System.out.println("String po zmianach: " + '\t' + NewMovesString + " (" + NewMoves.size() + ')');
-        System.out.println("obecna rotacja : " + '\t' + rh.getCurrentRotation());
+        // System.out.println("obecna rotacja : " + '\t' + rh.getCurrentRotation());
         return NewMoves;
     }
 }

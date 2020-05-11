@@ -1,7 +1,5 @@
 package com.company;
 
-import org.jetbrains.annotations.NotNull;
-
 public class BasicTurnOperations {
     public int getDegreeFlag(String move) {
 
