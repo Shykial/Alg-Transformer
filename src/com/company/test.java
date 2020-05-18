@@ -1,12 +1,14 @@
 package com.company;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class test extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
+    private JTextField textField1;
 
     public test() {
         setContentPane(contentPane);
@@ -63,4 +65,5 @@ public class test extends JDialog {
         dialog.setVisible(true);
         System.exit(0);
     }
+
 }
