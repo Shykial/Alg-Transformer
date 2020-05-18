@@ -11,7 +11,6 @@ public class MovesHandler extends BasicTurnOperations {
         else return move + '\'';
     }
 
-
 //    private void swapElements(String[] array, int index1, int index2)
 //    {
 //        String temp = array[index1];
@@ -100,18 +99,18 @@ public class MovesHandler extends BasicTurnOperations {
             default -> throw new IllegalArgumentException("mlwh Move flag exception");
         }
 
-        switch (move.charAt(0)) {
-            case 'M' -> {
+        switch (getAxis(move)) {
+            case "M" -> {
                 rh.affectCurrentRotation("x" + oppositeMoveFlag);
                 moves.add(affectTurn(("R" + moveFlag), rh));
                 moves.add(affectTurn(("L" + oppositeMoveFlag), rh));
             }
-            case 'S' -> {
+            case "S" -> {
                 rh.affectCurrentRotation("z" + moveFlag);
                 moves.add(affectTurn(("F" + oppositeMoveFlag), rh));
                 moves.add(affectTurn(("B" + moveFlag), rh));
             }
-            case 'E' -> {
+            case "E" -> {
                 rh.affectCurrentRotation("y" + oppositeMoveFlag);
                 moves.add(affectTurn(("U" + moveFlag), rh));
                 moves.add(affectTurn(("D" + oppositeMoveFlag), rh));
@@ -126,6 +125,7 @@ public class MovesHandler extends BasicTurnOperations {
 //        String moveFlag = "'2".contains(degreeFlag) ? degreeFlag : "";
         String moveFlag;
         String oppositeMoveFlag;
+
         switch (getDegreeFlag(turn)) {
             case 1 -> {
                 moveFlag = "";

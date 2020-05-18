@@ -1,10 +1,11 @@
 package com.company;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CubeStateHandler extends BasicTurnOperations {
-//    String[] corners;
-//    String[] edges;
 
     private final HashMap<String, char[]> solvedCorners = new HashMap<>();
     private final HashMap<String, char[]> solvedEdges = new HashMap<>();
@@ -164,9 +165,9 @@ public class CubeStateHandler extends BasicTurnOperations {
         }
     }
 
-    public void countIncorrectElements(){
+    public void countIncorrectElements() {
         for (Map.Entry<String, char[]> el : corners.entrySet()) {
-            if (!Arrays.equals(el.getValue(),solvedCorners.get(el.getKey()))) {
+            if (!Arrays.equals(el.getValue(), solvedCorners.get(el.getKey()))) {
                 char[] temp1 = el.getValue().clone();
                 char[] temp2 = solvedCorners.get(el.getKey()).clone();
                 Arrays.sort(temp1);
@@ -176,8 +177,8 @@ public class CubeStateHandler extends BasicTurnOperations {
             }
         }
 
-        for(Map.Entry<String, char[]> el : edges.entrySet()) {
-            if(!Arrays.equals(el.getValue(),solvedEdges.get(el.getKey()))) {
+        for (Map.Entry<String, char[]> el : edges.entrySet()) {
+            if (!Arrays.equals(el.getValue(), solvedEdges.get(el.getKey()))) {
                 char[] temp1 = el.getValue().clone();
                 char[] temp2 = solvedEdges.get(el.getKey()).clone();
                 Arrays.sort(temp1);

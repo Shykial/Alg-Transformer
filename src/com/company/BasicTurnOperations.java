@@ -1,6 +1,6 @@
 package com.company;
 
-public class BasicTurnOperations {
+abstract class BasicTurnOperations {
     public int getDegreeFlag(String move) {
 
         if (move.length() == 0) return 0; //0 gdy nie ma ruchu
