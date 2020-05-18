@@ -30,47 +30,16 @@ public class MovesHandler extends BasicTurnOperations {
         char[] affectedCRS; //
 
         switch (rotation) {
-            case "x": {
-                affectedCRS = new char[]{CRS[2], CRS[3], CRS[1], CRS[0], CRS[4], CRS[5]};
-                break;
-            }
-
-            case "x'": {
-                affectedCRS = new char[]{CRS[3], CRS[2], CRS[0], CRS[1], CRS[4], CRS[5]};
-                break;
-            }
-            case "x2": {
-                affectedCRS = new char[]{CRS[1], CRS[0], CRS[3], CRS[2], CRS[4], CRS[5]};
-                break;
-            }
-            case "y": {
-                affectedCRS = new char[]{CRS[0], CRS[1], CRS[5], CRS[4], CRS[2], CRS[3]};
-                break;
-            }
-            case "y'": {
-                affectedCRS = new char[]{CRS[0], CRS[1], CRS[4], CRS[5], CRS[3], CRS[2]};
-                break;
-            }
-            case "y2": {
-                affectedCRS = new char[]{CRS[0], CRS[1], CRS[3], CRS[2], CRS[5], CRS[4]};
-                break;
-            }
-            case "z": {
-                affectedCRS = new char[]{CRS[4], CRS[5], CRS[2], CRS[3], CRS[1], CRS[0]};
-                break;
-            }
-            case "z'": {
-                affectedCRS = new char[]{CRS[5], CRS[4], CRS[2], CRS[3], CRS[0], CRS[1]};
-                break;
-            }
-            case "z2": {
-                affectedCRS = new char[]{CRS[1], CRS[0], CRS[2], CRS[3], CRS[5], CRS[4]};
-                break;
-            }
-
-            default:
-                throw new IllegalArgumentException("affect cube rotation state array parameter exception");
-
+            case "x" -> affectedCRS = new char[]{CRS[2], CRS[3], CRS[1], CRS[0], CRS[4], CRS[5]};
+            case "x'" -> affectedCRS = new char[]{CRS[3], CRS[2], CRS[0], CRS[1], CRS[4], CRS[5]};
+            case "x2" -> affectedCRS = new char[]{CRS[1], CRS[0], CRS[3], CRS[2], CRS[4], CRS[5]};
+            case "y" -> affectedCRS = new char[]{CRS[0], CRS[1], CRS[5], CRS[4], CRS[2], CRS[3]};
+            case "y'" -> affectedCRS = new char[]{CRS[0], CRS[1], CRS[4], CRS[5], CRS[3], CRS[2]};
+            case "y2" -> affectedCRS = new char[]{CRS[0], CRS[1], CRS[3], CRS[2], CRS[5], CRS[4]};
+            case "z" -> affectedCRS = new char[]{CRS[4], CRS[5], CRS[2], CRS[3], CRS[1], CRS[0]};
+            case "z'" -> affectedCRS = new char[]{CRS[5], CRS[4], CRS[2], CRS[3], CRS[0], CRS[1]};
+            case "z2" -> affectedCRS = new char[]{CRS[1], CRS[0], CRS[2], CRS[3], CRS[5], CRS[4]};
+            default -> throw new IllegalArgumentException("affect cube rotation state array parameter exception");
         }
         //return affectedCRS;
         System.arraycopy(affectedCRS, 0, CRS, 0, CRS.length);
@@ -116,44 +85,38 @@ public class MovesHandler extends BasicTurnOperations {
         String oppositeMoveFlag;
 
         switch (getDegreeFlag(move)) {
-            case 1:
+            case 1 -> {
                 moveFlag = "";
                 oppositeMoveFlag = "'";
-                break;
-            case -1:
+            }
+            case -1 -> {
                 moveFlag = "'";
                 oppositeMoveFlag = "";
-                break;
-            case 2:
+            }
+            case 2 -> {
                 moveFlag = "2";
                 oppositeMoveFlag = "2";
-                break;
-            default:
-                throw new IllegalArgumentException("mlwh Move flag exception");
-//                moveFlag = "1000";
-//                oppositeMoveFlag = "2000";
-//                System.out.println("move flag exception");
+            }
+            default -> throw new IllegalArgumentException("mlwh Move flag exception");
         }
 
         switch (move.charAt(0)) {
-            case 'M':
+            case 'M' -> {
                 rh.affectCurrentRotation("x" + oppositeMoveFlag);
                 moves.add(affectTurn(("R" + moveFlag), rh));
                 moves.add(affectTurn(("L" + oppositeMoveFlag), rh));
-                break;
-            case 'S':
+            }
+            case 'S' -> {
                 rh.affectCurrentRotation("z" + moveFlag);
                 moves.add(affectTurn(("F" + oppositeMoveFlag), rh));
                 moves.add(affectTurn(("B" + moveFlag), rh));
-                break;
-            case 'E':
+            }
+            case 'E' -> {
                 rh.affectCurrentRotation("y" + oppositeMoveFlag);
                 moves.add(affectTurn(("U" + moveFlag), rh));
                 moves.add(affectTurn(("D" + oppositeMoveFlag), rh));
-                break;
-            default:
-                throw new IllegalArgumentException("Middle layers exception");
-
+            }
+            default -> throw new IllegalArgumentException("Middle layers exception");
         }
     }
     public String wideMovesHandler(String turn, RotationHandler rh) {
@@ -164,50 +127,47 @@ public class MovesHandler extends BasicTurnOperations {
         String moveFlag;
         String oppositeMoveFlag;
         switch (getDegreeFlag(turn)) {
-            case 1:
+            case 1 -> {
                 moveFlag = "";
                 oppositeMoveFlag = "'";
-                break;
-
-            case -1:
+            }
+            case -1 -> {
                 moveFlag = "'";
                 oppositeMoveFlag = "";
-                break;
-            case 2:
+            }
+            case 2 -> {
                 moveFlag = "2";
                 oppositeMoveFlag = "2";
-                break;
-            default:
-                throw new IllegalArgumentException("wmh Move flag exception");
-
+            }
+            default -> throw new IllegalArgumentException("wmh Move flag exception");
         }
 
         switch (Character.toUpperCase(turn.charAt(0))) {
-            case 'R':
+            case 'R' -> {
                 rh.affectCurrentRotation("x" + moveFlag);
-//                System.out.println("obcecna rotacja to: " + rh.getCurrentRotation());
-//                System.out.println("test Rw: "+"x"+moveFlag);
                 return "L" + moveFlag;
-            case 'L':
+            }
+            case 'L' -> {
                 rh.affectCurrentRotation("x" + oppositeMoveFlag);
-//                System.out.println("obcecna rotacja to: " + rh.getCurrentRotation());
-//                System.out.println("test Lw: "+"x"+moveFlag);
                 return "R" + moveFlag;
-            case 'F':
+            }
+            case 'F' -> {
                 rh.affectCurrentRotation("z" + moveFlag);
                 return "B" + moveFlag;
-            case 'B':
+            }
+            case 'B' -> {
                 rh.affectCurrentRotation("z" + oppositeMoveFlag);
                 return "F" + moveFlag;
-            case 'U':
+            }
+            case 'U' -> {
                 rh.affectCurrentRotation("y" + moveFlag);
                 return "D" + moveFlag;
-            case 'D':
+            }
+            case 'D' -> {
                 rh.affectCurrentRotation("y" + oppositeMoveFlag);
                 return "U" + moveFlag;
-            default:
-                throw new IllegalArgumentException("wmh Move flag exception 2");
+            }
+            default -> throw new IllegalArgumentException("wmh Move flag exception 2");
         }
-
     }
 }

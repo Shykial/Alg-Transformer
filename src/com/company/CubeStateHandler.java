@@ -122,39 +122,37 @@ public class CubeStateHandler extends BasicTurnOperations {
         String[] corners, edges;
 
         switch (getAxis(move)) {
-            case "U":
+            case "U" -> {
                 corners = new String[]{"UBL", "UBR", "UFR", "UFL"};
                 edges = new String[]{"UB", "UR", "UF", "UL"};
                 charArrayOrderFlag = 1;                 //cycle + swap char[1] with char[2] for corners if not U2, no affect on edges
-                break;
-            case "D":
+            }
+            case "D" -> {
                 corners = new String[]{"DBL", "DFL", "DFR", "DBR"};
                 edges = new String[]{"DB", "DL", "DF", "DR"};
                 charArrayOrderFlag = 1;
-                break;
-            case "F":
+            }
+            case "F" -> {
                 corners = new String[]{"UFL", "UFR", "DFR", "DFL"};
                 edges = new String[]{"UF", "FR", "DF", "FL"};
                 charArrayOrderFlag = 2;                //cycle + inverse char array order for both corners and edges if not F2 ArrayUtils.reverse(char[] array)
-                break;
-            case "B":
+            }
+            case "B" -> {
                 corners = new String[]{"UBL", "DBL", "DBR", "UBR"};
                 edges = new String[]{"UB", "BL", "DB", "BR"};
                 charArrayOrderFlag = 2;
-                break;
-            case "L":
+            }
+            case "L" -> {
                 corners = new String[]{"UBL", "UFL", "DFL", "DBL"};
                 edges = new String[]{"UL", "FL", "DL", "BL"};
                 charArrayOrderFlag = 3;                //cycle + swap char[0] with char[1] for corners if not L2, no affect on edges
-                break;
-            case "R":
+            }
+            case "R" -> {
                 corners = new String[]{"UBR", "DBR", "DFR", "UFR"};
                 edges = new String[]{"UR", "BR", "DR", "FR"};
                 charArrayOrderFlag = 3;
-                break;
-            default:
-                throw new IllegalArgumentException("cycle elements argument Exception");
-
+            }
+            default -> throw new IllegalArgumentException("cycle elements argument Exception");
         }
 
         cycleElements(corners, edges, charArrayOrderFlag, getDegreeFlag(move));

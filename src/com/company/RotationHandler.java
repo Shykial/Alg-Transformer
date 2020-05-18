@@ -29,17 +29,12 @@ public class RotationHandler extends BasicTurnOperations {
 
         if (rotation.length() == 0) return 10; //zwraca brak osi rotacji gdy takowej nie ma
 
-
-        switch (getAxis(rotation)) {
-            case "x":
-                return 11;
-            case "y":
-                return 12;
-            case "z":
-                return 13;
-            default:
-                throw new IllegalArgumentException("Rotation Axis exception");
-        }
+        return switch (getAxis(rotation)) {
+            case "x" -> 11;
+            case "y" -> 12;
+            case "z" -> 13;
+            default -> throw new IllegalArgumentException("Rotation Axis exception");
+        };
     }
 
 
@@ -50,18 +45,13 @@ public class RotationHandler extends BasicTurnOperations {
 
     private String addTwo180Rotations(String firstRotation, String secondRotation) {
         {
-            switch (getRotationAxisFlag(firstRotation) * getRotationAxisFlag(secondRotation)) {
-                case 132: //11*12
-                    return "z2";
-                case 143: //11*13
-                    return "y2";
-                case 156: //12*13
-                    return "x2";
-                case 121: case 144: case 169: //11^2, 12^2, 13^2
-                    return "";
-                default:
-                    throw new RuntimeException("Invalid rotations flag multiplier");
-            }
+            return switch (getRotationAxisFlag(firstRotation) * getRotationAxisFlag(secondRotation)) {
+                case 132 -> "z2"; //11*12
+                case 143 -> "y2"; //11*13
+                case 156 -> "x2"; //12*13
+                case 121, 144, 169 -> ""; //11^2, 12^2, 13^2
+                default -> throw new RuntimeException("Invalid rotations flag multiplier");
+            };
         }
     }
 
@@ -116,15 +106,12 @@ public class RotationHandler extends BasicTurnOperations {
                 String threeRotationsString = "" + getAxis(firstSubRotation) + getAxis(secondSubRotation) + getAxis(rotation);
                 if (threeRotationsString.contains("xz") || threeRotationsString.contains("zy")) rotationMultiplier = -1;
                 switch (getDegreeFlag(secondSubRotation)) {
-                    case 1:
-                        firstSubRotation = addDegreeFlags(firstSubRotation, rotationMultiplier * getDegreeFlag(rotation));
-                        break;
-                    case -1:
-                        firstSubRotation = addDegreeFlags(firstSubRotation, -1 * rotationMultiplier * getDegreeFlag(rotation));
-                        break;
-                    case 2:
+                    case 1 -> firstSubRotation = addDegreeFlags(firstSubRotation, rotationMultiplier * getDegreeFlag(rotation));
+                    case -1 -> firstSubRotation = addDegreeFlags(firstSubRotation, -1 * rotationMultiplier * getDegreeFlag(rotation));
+                    case 2 -> {
                         firstSubRotation = addDegreeFlags(firstSubRotation, 2);
                         secondSubRotation = addDegreeFlags(rotation, 2);
+                    }
                 }
             }
 
