@@ -193,7 +193,7 @@ public class CubeStateHandler extends BasicTurnOperations {
         countIncorrectElements();
         StringBuilder sb = new StringBuilder();
         if (incorrectEdges > 0) sb.append(incorrectEdges).append("e");
-        if (flippedEdges > 0) sb.append(flippedEdges).append("te");
+        if (flippedEdges > 0) sb.append(flippedEdges).append("fe");
         if (incorrectCorners > 0) sb.append(incorrectCorners).append("c");
         if (twistedCorners > 0) sb.append(twistedCorners).append("tc");
         return sb.toString();

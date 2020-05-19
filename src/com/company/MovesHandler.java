@@ -5,27 +5,14 @@ import java.util.ArrayList;
 public class MovesHandler extends BasicTurnOperations {
 
 
-    public String getOppositeMove(String move) {
+    public static String getOppositeMove(String move) {
         if (move.contains("2")) return move;
         else if (move.charAt(move.length() - 1) == '\'') return move.substring(0, move.length() - 1);
         else return move + '\'';
     }
 
-//    private void swapElements(String[] array, int index1, int index2)
-//    {
-//        String temp = array[index1];
-//        array[index1] = array[index2];
-//        array[index2] = temp;
-//    }
-//
-//    private void swapElements(char[] array, int index1, int index2)
-//    {
-//        char temp = array[index1];
-//        array[index1] = array[index2];
-//        array[index2] = temp;
-//    }
 
-    private void affectCubeRotationState(char[] CRS, String rotation) {
+    private static void affectCubeRotationState(char[] CRS, String rotation) {
         char[] affectedCRS; //
 
         switch (rotation) {
@@ -45,7 +32,7 @@ public class MovesHandler extends BasicTurnOperations {
     }
 
 
-    public String affectTurn(String turn, RotationHandler rh) {
+    public static String affectTurn(String turn, RotationHandler rh) {
 
         if (rh.getCurrentRotation().equals("")) return turn;
         StringBuilder newTurn = new StringBuilder();
@@ -79,7 +66,7 @@ public class MovesHandler extends BasicTurnOperations {
 
     //   public
 
-    public void middleLayerMovesHandler(String move, ArrayList<String> moves, RotationHandler rh) {
+    public static void middleLayerMovesHandler(String move, ArrayList<String> moves, RotationHandler rh) {
         String moveFlag;
         String oppositeMoveFlag;
 
@@ -118,11 +105,8 @@ public class MovesHandler extends BasicTurnOperations {
             default -> throw new IllegalArgumentException("Middle layers exception");
         }
     }
-    public String wideMovesHandler(String turn, RotationHandler rh) {
+    public static String wideMovesHandler(String turn, RotationHandler rh) {
 
-        //String moveFlag = turn.length() > 2 ? String.valueOf(turn.charAt(turn.length() - 1)) : "";
-//        String degreeFlag = String.valueOf(turn.charAt(turn.length() - 1));
-//        String moveFlag = "'2".contains(degreeFlag) ? degreeFlag : "";
         String moveFlag;
         String oppositeMoveFlag;
 

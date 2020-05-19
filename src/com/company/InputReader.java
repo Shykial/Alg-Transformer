@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class InputReader {
 
+
     private final RotationHandler rh = new RotationHandler();
-    private final MovesHandler mh = new MovesHandler();
 
     public String getCurrentRotation() {
         return rh.getCurrentRotation();
     }
 
-    private ArrayList<String> movesStringToArray(String moves) {
+    private static ArrayList<String> movesStringToArray(String moves) {
         ArrayList<String> MovesArray = new ArrayList<>();
 
         StringBuilder Move = new StringBuilder();
@@ -29,12 +29,12 @@ public class InputReader {
         return MovesArray;
     }
 
-    public int movesCanceller(ArrayList<String> moves) {
+    public static int movesCanceller(ArrayList<String> moves) {
         int originalSize = moves.size();
         for (int i = 0; i < moves.size() - 1; i++) {
-            if (mh.getAxis(moves.get(i)).equals(mh.getAxis(moves.get(i + 1)))) //sprawdzenie czy dwa ruchy sa tego samego znaku
+            if (MovesHandler.getAxis(moves.get(i)).equals(MovesHandler.getAxis(moves.get(i + 1)))) //sprawdzenie czy dwa ruchy sa tego samego znaku
             {
-                moves.set(i + 1, mh.addSameAxisTurns(moves.get(i), moves.get(i + 1)));
+                moves.set(i + 1, MovesHandler.addSameAxisTurns(moves.get(i), moves.get(i + 1)));
                 if (moves.get(i + 1).equals("")) moves.remove(i + 1);
                 moves.remove(i);
                 i -= 2;
@@ -43,13 +43,8 @@ public class InputReader {
         return originalSize - moves.size();
     }
 
-//    public String algExpander(String moves) {
-//        return "";
-//
-//    }
 
-
-    public ArrayList<String> commExpander(String moves) {
+    public static ArrayList<String> commExpander(String moves) {
         ArrayList<String> firstPartArray;
         ArrayList<String> secondPartArray;
 
@@ -59,31 +54,17 @@ public class InputReader {
 
         firstPartArray = movesStringToArray(firstPart);
         secondPartArray = movesStringToArray(secondPart);
-//
-//        StringBuilder expandedComm = new StringBuilder();
-//
-//        for (String move : firstPartArray) expandedComm.append(move).append(' ');
-//        for (String move2 : secondPartArray) expandedComm.append(move2).append(' ');
-//
-//        for (int i = firstPartArray.size() - 1; i >= 0; i--)
-//            expandedComm.append(mh.getOppositeMove(firstPartArray.get(i))).append(' ');
-//
-//        for (int i = secondPartArray.size() - 1; i >= 0; i--) {
-//            expandedComm.append(mh.getOppositeMove(secondPartArray.get(i)));
-//            if (i != 0) expandedComm.append(' ');
-//        }
-//
-//        return expandedComm.toString();
+
         ArrayList<String> expandedComm = new ArrayList<>();
         expandedComm.addAll(firstPartArray);
         expandedComm.addAll(secondPartArray);
 
         for (int i = firstPartArray.size() - 1; i >= 0; i--)
-            expandedComm.add(mh.getOppositeMove(firstPartArray.get(i)));
+            expandedComm.add(MovesHandler.getOppositeMove(firstPartArray.get(i)));
 
 
         for (int i = secondPartArray.size() - 1; i >= 0; i--)
-            expandedComm.add(mh.getOppositeMove(secondPartArray.get(i)));
+            expandedComm.add(MovesHandler.getOppositeMove(secondPartArray.get(i)));
 
         return expandedComm;
     }
@@ -91,6 +72,7 @@ public class InputReader {
     public ArrayList<String> readInput(String moves) {
 
         rh.clearCurrentRotation();
+
         String rotationsString = "xyz";
         String turnsString = "RLFBUDrlfbudMES";
         String wideMovesString = turnsString.substring(6, 12);
@@ -110,15 +92,15 @@ public class InputReader {
             if (turnsString.contains(String.valueOf(move.charAt(0)))) {
 
                 if (middleLayerMovesString.contains(String.valueOf(move.charAt(0)))) {
-                    mh.middleLayerMovesHandler(move, NewMoves, rh);
+                    MovesHandler.middleLayerMovesHandler(move, NewMoves, rh);
                     continue;
                 }
 
                 if (move.contains("w") || wideMovesString.contains(String.valueOf(move.charAt(0))))
-                    move = mh.wideMovesHandler(move, rh);
+                    move = MovesHandler.wideMovesHandler(move, rh);
 
                 if (rh.getCurrentRotation().length() > 0) {
-                    move = mh.affectTurn(move, rh);
+                    move = MovesHandler.affectTurn(move, rh);
                 }
 
                 NewMoves.add(move);

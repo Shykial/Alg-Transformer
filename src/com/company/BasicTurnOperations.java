@@ -1,7 +1,7 @@
 package com.company;
 
 abstract class BasicTurnOperations {
-    public int getDegreeFlag(String move) {
+    public static int getDegreeFlag(String move) {
 
         if (move.length() == 0) return 0; //0 gdy nie ma ruchu
         if (!(move.contains("'") || move.contains("2"))) return 1; //1 gdy nie ma ani prima ani dwojki
@@ -14,7 +14,7 @@ abstract class BasicTurnOperations {
 
     }
 
-    public String getAxis(String move) {
+    public static String getAxis(String move) {
 
         if (move.length() == 0) return ""; //0 gdy nie ma ruchu
         if (move.contains("'") || move.contains("2"))
@@ -22,7 +22,7 @@ abstract class BasicTurnOperations {
         else return move;
     }
 
-    public String addDegreeFlags(String move, int x) {
+    public static String addDegreeFlags(String move, int x) {
         return switch (getDegreeFlag(move) + x) {
             case 1 -> getAxis(move);
             case 2, -2 -> getAxis(move) + '2';  // x' + x' = x + x
@@ -32,7 +32,7 @@ abstract class BasicTurnOperations {
         };
     }
 
-    public String addSameAxisTurns(String firstMove, String secondMove) {
+    public static String addSameAxisTurns(String firstMove, String secondMove) {
         return addDegreeFlags(firstMove, getDegreeFlag(secondMove));
     }
 

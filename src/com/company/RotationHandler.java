@@ -39,7 +39,6 @@ public class RotationHandler extends BasicTurnOperations {
 
 
     public String getRotationDegree(String rotation, int x) {
-        System.out.println(addDegreeFlags(rotation, x-1));
         return addDegreeFlags(rotation, x-1);
     }
 
