@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class InputReader {
 
@@ -11,23 +12,28 @@ public class InputReader {
         return rh.getCurrentRotation();
     }
 
+//    private static ArrayList<String> movesStringToArray2(String moves) {
+//        ArrayList<String> MovesArray = new ArrayList<>();
+//
+//        StringBuilder Move = new StringBuilder();
+//        for (int i = 0; i < moves.length(); i++) {
+//            if (moves.charAt(i) == '[') i++;
+//
+//            if (moves.charAt(i) == ' ' || moves.charAt(i) == ',' || i == moves.length() - 1) {
+//                if ((i == moves.length() - 1) && moves.charAt(i) != ']') Move.append(moves.charAt(i));
+//                if (Move.length() == 0) continue;
+//                MovesArray.add(Move.toString());
+//                Move = new StringBuilder();
+//            } else Move.append(moves.charAt(i));
+//
+//        }
+//        return MovesArray;
+//    }
+
     private static ArrayList<String> movesStringToArray(String moves) {
-        ArrayList<String> MovesArray = new ArrayList<>();
-
-        StringBuilder Move = new StringBuilder();
-        for (int i = 0; i < moves.length(); i++) {
-            if (moves.charAt(i) == '[') i++;
-
-            if (moves.charAt(i) == ' ' || moves.charAt(i) == ',' || i == moves.length() - 1) {
-                if ((i == moves.length() - 1) && moves.charAt(i) != ']') Move.append(moves.charAt(i));
-                if (Move.length() == 0) continue;
-                MovesArray.add(Move.toString());
-                Move = new StringBuilder();
-            } else Move.append(moves.charAt(i));
-
-        }
-        return MovesArray;
-    }
+        String movesWithoutCurlyBraces = moves.trim().replaceAll("[\\[\\]]", "");
+        return new ArrayList<>(Arrays.asList(movesWithoutCurlyBraces.split(",* ")));
+    } //yo, those regexes are kinda cool
 
     public static int movesCanceller(ArrayList<String> moves) {
         int originalSize = moves.size();
@@ -47,7 +53,8 @@ public class InputReader {
     public static ArrayList<String> commExpander(String moves) {
         ArrayList<String> firstPartArray;
         ArrayList<String> secondPartArray;
-
+//        String[] firstPartArray;
+//        String[] secondPartArray;
         int commaIndex = moves.indexOf(',');
         String firstPart = moves.substring(0, commaIndex);
         String secondPart = moves.substring(commaIndex + 1);
