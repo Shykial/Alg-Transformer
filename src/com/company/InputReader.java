@@ -31,8 +31,7 @@ public class InputReader {
 //    }
 
     private static ArrayList<String> movesStringToArray(String moves) {
-        String movesWithoutCurlyBraces = moves.trim().replaceAll("[\\[\\]]", "");
-        return new ArrayList<>(Arrays.asList(movesWithoutCurlyBraces.split(",* ")));
+        return new ArrayList<>(Arrays.asList(moves.trim().replaceAll("[\\[\\]]", "").split(",* "))); //moves.trim usuwa spacje, replacaAll usuwa nawiasy kwadratowe, split rozdziela tworzac tablice stringow
     } //yo, those regexes are kinda cool
 
     public static int movesCanceller(ArrayList<String> moves) {
