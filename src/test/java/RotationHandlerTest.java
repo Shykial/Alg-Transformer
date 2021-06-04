@@ -1,25 +1,15 @@
-package Tests;
+import com.algtransformer.RotationHandler;
+import org.junit.jupiter.api.Test;
 
-import com.company.RotationHandler;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RotationHandlerTest {
 
-//    @org.junit.jupiter.api.Test
-//    void getCurrentRotation() {
-//    }
-//
-//    @org.junit.jupiter.api.Test
-//    void setCurrentRotation() {
-//    }
+    private final RotationHandler rh = new RotationHandler();
 
-    @org.junit.jupiter.api.Test
-    void setRotationFlagTest (){
-        RotationHandler rh = new RotationHandler();
-
+    @Test
+    void setRotationFlagTest() {
         char x = 'x';
-      //  System.out.println(String.valueOf(x));
 
         rh.setCurrentRotation(rh.getRotationDegree(String.valueOf(x), -1));
         assertEquals(rh.getCurrentRotation(), "x'");
@@ -32,7 +22,7 @@ class RotationHandlerTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void affectCurrentRotationTest() {
 
         RotationHandler rh = new RotationHandler();
@@ -125,21 +115,18 @@ class RotationHandlerTest {
         assertEquals(r8.getCurrentRotation(), "y z'");
 
         r8.affectCurrentRotation("y2");
-        //System.out.println(r8.getCurrentRotation());
         assertEquals(r8.getCurrentRotation(), "y' z");
 
         RotationHandler r9 = new RotationHandler("y2 z'");
         assertEquals(r9.getCurrentRotation(), "y2 z'");
 
         r9.affectCurrentRotation("y2");
-        //System.out.println(r8.getCurrentRotation());
         assertEquals(r9.getCurrentRotation(), "z");
 
         RotationHandler r10 = new RotationHandler("y' z2");
         assertEquals(r10.getCurrentRotation(), "y' z2");
 
         r10.affectCurrentRotation("x");
-        //System.out.println(r8.getCurrentRotation());
         assertEquals(r10.getCurrentRotation(), "y x'");
     }
 }

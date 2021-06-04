@@ -1,9 +1,9 @@
-package com.company;
+package com.algtransformer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovesHandler extends BasicTurnOperations {
-
 
     public static String getOppositeMove(String move) {
         if (move.contains("2")) return move;
@@ -13,7 +13,7 @@ public class MovesHandler extends BasicTurnOperations {
 
 
     private static void affectCubeRotationState(char[] CRS, String rotation) {
-        char[] affectedCRS; //
+        char[] affectedCRS;
 
         switch (rotation) {
             case "x" -> affectedCRS = new char[]{CRS[2], CRS[3], CRS[1], CRS[0], CRS[4], CRS[5]};
@@ -27,7 +27,7 @@ public class MovesHandler extends BasicTurnOperations {
             case "z2" -> affectedCRS = new char[]{CRS[1], CRS[0], CRS[2], CRS[3], CRS[5], CRS[4]};
             default -> throw new IllegalArgumentException("affect cube rotation state array parameter exception");
         }
-        //return affectedCRS;
+
         System.arraycopy(affectedCRS, 0, CRS, 0, CRS.length);
     }
 
@@ -57,16 +57,14 @@ public class MovesHandler extends BasicTurnOperations {
 
         char[] cubeRotationState = {'U', 'D', 'F', 'B', 'L', 'R'}; // U D F B L R
         for (String rotationSubString : rotationSubStrings)
-            affectCubeRotationState(cubeRotationState, rotationSubString); //enhanced for
+            affectCubeRotationState(cubeRotationState, rotationSubString);
 
         newTurn.setCharAt(0, cubeRotationState[turnIndex]);
 
         return newTurn.toString();
     }
 
-    //   public
-
-    public static void middleLayerMovesHandler(String move, ArrayList<String> moves, RotationHandler rh) {
+    public static void middleLayerMovesHandler(String move, List<String> moves, RotationHandler rh) {
         String moveFlag;
         String oppositeMoveFlag;
 

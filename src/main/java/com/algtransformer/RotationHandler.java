@@ -1,4 +1,4 @@
-package com.company;
+package com.algtransformer;
 
 public class RotationHandler extends BasicTurnOperations {
 
@@ -27,7 +27,7 @@ public class RotationHandler extends BasicTurnOperations {
 
     private int getRotationAxisFlag(String rotation) {
 
-        if (rotation.length() == 0) return 10; //zwraca brak osi rotacji gdy takowej nie ma
+        if (rotation.length() == 0) return 10;
 
         return switch (getAxis(rotation)) {
             case "x" -> 11;
@@ -39,7 +39,7 @@ public class RotationHandler extends BasicTurnOperations {
 
 
     public String getRotationDegree(String rotation, int x) {
-        return addDegreeFlags(rotation, x-1);
+        return addDegreeFlags(rotation, x - 1);
     }
 
     private String addTwo180Rotations(String firstRotation, String secondRotation) {
@@ -56,42 +56,37 @@ public class RotationHandler extends BasicTurnOperations {
 
     public void affectCurrentRotation(String rotation) {
 
-        //ustawienie rotacji gdy takowej nie ma
         if (currentRotation.equals("")) {
             currentRotation = rotation;
             return;
         }
 
-        //sprawdzenie czy rotacja jest w jednej osi
+        //checking if rotation is in one axis
         if (!(currentRotation.contains(" "))) {
 
-            //obsluga dodania rotacji po tej samej osi
             if (getAxis(currentRotation).equals(getAxis(rotation)))
                 setCurrentRotation(addSameAxisTurns(currentRotation, rotation));
 
-                ////////////////////dodanie dwoch podwojnych rotacji
+                //adding two 180 rotations
             else if (getDegreeFlag(currentRotation) == 2 && getDegreeFlag(rotation) == 2)
                 this.currentRotation = addTwo180Rotations(currentRotation, rotation);
 
             else currentRotation += ' ' + rotation;
-            //return 1;
         }
 
-        //gdy rotacja sklada sie z dwoch sub rotacji
+        //when rotation consists of two sub-rotations
         else {
 
-            int spacePosition = currentRotation.indexOf(' '); //wyznaczenie separatora i podzial subStringow
+            int spacePosition = currentRotation.indexOf(' ');
             String firstSubRotation = currentRotation.substring(0, spacePosition);
             String secondSubRotation = currentRotation.substring(spacePosition + 1);
 
-           // if (secondSubRotation.charAt(0) == rotation.charAt(0))
             if (getAxis(secondSubRotation).equals(getAxis(rotation)))
-                secondSubRotation = addSameAxisTurns(secondSubRotation, rotation); //dodanie drugiej sub rotacji do rotacji gdy sa na tej samej osi
+                secondSubRotation = addSameAxisTurns(secondSubRotation, rotation);
 
-            else if (getDegreeFlag(secondSubRotation) == 2 && getDegreeFlag(rotation) == 2) //dodanie dwoch podwojnych rotacji
+            else if (getDegreeFlag(secondSubRotation) == 2 && getDegreeFlag(rotation) == 2) //adding two 180 rotations
                 secondSubRotation = addTwo180Rotations(secondSubRotation, rotation);
 
-            //dodanie pierwszej subRotacji do drugiej gdy sa na tej samej osi po dodaniu rotacji docelowej
             if (secondSubRotation.length() > 0 && getAxis(firstSubRotation).equals(getAxis(secondSubRotation))) {
                 firstSubRotation = addSameAxisTurns(firstSubRotation, secondSubRotation);
                 secondSubRotation = "";
@@ -125,8 +120,9 @@ public class RotationHandler extends BasicTurnOperations {
                     else if (!twoRotationsString.contains("y")) complement = 'y';
                     else if (!twoRotationsString.contains("z")) complement = 'z';
 
-                    if (twoRotationsString.equals("zx") || twoRotationsString.equals("xy") || twoRotationsString.equals("yz"))
+                    if (twoRotationsString.equals("zx") || twoRotationsString.equals("xy") || twoRotationsString.equals("yz")) {
                         rotationMultiplier = -1;
+                    }
                     firstSubRotation = addSameAxisTurns(firstSubRotation, rotation);
                     secondSubRotation = getRotationDegree(String.valueOf(complement), rotationMultiplier * getDegreeFlag(secondSubRotation) * getDegreeFlag(rotation));
                 }
@@ -135,7 +131,6 @@ public class RotationHandler extends BasicTurnOperations {
             if (!getAxis(firstSubRotation).equals(getAxis(secondSubRotation)) && getDegreeFlag(firstSubRotation) == 2 && getDegreeFlag(secondSubRotation) == 2) {
                 firstSubRotation = addTwo180Rotations(firstSubRotation, secondSubRotation);
                 secondSubRotation = "";
-                //System.out.println("mam Cie!");
             } else if ((firstSubRotation.length() > 0 && secondSubRotation.length() > 0 && firstSubRotation.charAt(0) == secondSubRotation.charAt(0))) {
                 firstSubRotation = addSameAxisTurns(firstSubRotation, secondSubRotation);
                 secondSubRotation = "";

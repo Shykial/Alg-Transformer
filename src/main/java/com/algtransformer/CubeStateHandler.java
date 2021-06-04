@@ -1,49 +1,54 @@
-package com.company;
+package com.algtransformer;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Map.entry;
+
 public class CubeStateHandler extends BasicTurnOperations {
 
-    private final HashMap<String, char[]> solvedCorners = new HashMap<>();
-    private final HashMap<String, char[]> solvedEdges = new HashMap<>();
-    private final HashMap<String, char[]> corners;
-    private final HashMap<String, char[]> edges;
+    private Map<String, char[]> solvedCorners;
+    private Map<String, char[]> solvedEdges;
+    private final Map<String, char[]> corners;
+    private final Map<String, char[]> edges;
     private int incorrectCorners = 0;
     private int incorrectEdges = 0;
     private int twistedCorners = 0;
     private int flippedEdges = 0;
 
     public CubeStateHandler() {
-        // U face corners:
-        solvedCorners.put("UBL", new char[]{'W', 'B', 'O'});
-        solvedCorners.put("UBR", new char[]{'W', 'B', 'R'});
-        solvedCorners.put("UFR", new char[]{'W', 'G', 'R'});
-        solvedCorners.put("UFL", new char[]{'W', 'G', 'O'});
-        // D face corners:
-        solvedCorners.put("DBL", new char[]{'Y', 'B', 'O'});
-        solvedCorners.put("DBR", new char[]{'Y', 'B', 'R'});
-        solvedCorners.put("DFR", new char[]{'Y', 'G', 'R'});
-        solvedCorners.put("DFL", new char[]{'Y', 'G', 'O'});
+        solvedCorners = Map.of(
+                // U face corners:
+                "UBL", new char[]{'W', 'B', 'O'},
+                "UBR", new char[]{'W', 'B', 'R'},
+                "UFR", new char[]{'W', 'G', 'R'},
+                "UFL", new char[]{'W', 'G', 'O'},
+                // D face corners:
+                "DBL", new char[]{'Y', 'B', 'O'},
+                "DBR", new char[]{'Y', 'B', 'R'},
+                "DFR", new char[]{'Y', 'G', 'R'},
+                "DFL", new char[]{'Y', 'G', 'O'}
+        );
 
-        // U face edges:
-        solvedEdges.put("UB", new char[]{'W', 'B'});
-        solvedEdges.put("UR", new char[]{'W', 'R'});
-        solvedEdges.put("UF", new char[]{'W', 'G'});
-        solvedEdges.put("UL", new char[]{'W', 'O'});
-        // E slice edges:
-        solvedEdges.put("BL", new char[]{'B', 'O'});
-        solvedEdges.put("BR", new char[]{'B', 'R'});
-        solvedEdges.put("FL", new char[]{'G', 'O'});
-        solvedEdges.put("FR", new char[]{'G', 'R'});
-        // D face edges:
-        solvedEdges.put("DB", new char[]{'Y', 'B'});
-        solvedEdges.put("DR", new char[]{'Y', 'R'});
-        solvedEdges.put("DF", new char[]{'Y', 'G'});
-        solvedEdges.put("DL", new char[]{'Y', 'O'});
-
+        solvedEdges = Map.ofEntries(
+                // U face edges:
+                entry("UB", new char[]{'W', 'B'}),
+                entry("UR", new char[]{'W', 'R'}),
+                entry("UF", new char[]{'W', 'G'}),
+                entry("UL", new char[]{'W', 'O'}),
+                // E slice edges:)
+                entry("BL", new char[]{'B', 'O'}),
+                entry("BR", new char[]{'B', 'R'}),
+                entry("FL", new char[]{'G', 'O'}),
+                entry("FR", new char[]{'G', 'R'}),
+                // D face edges:)
+                entry("DB", new char[]{'Y', 'B'}),
+                entry("DR", new char[]{'Y', 'R'}),
+                entry("DF", new char[]{'Y', 'G'}),
+                entry("DL", new char[]{'Y', 'O'})
+        );
         //creating shallow copied maps for corners and edges
         corners = new HashMap<>(solvedCorners);
         edges = new HashMap<>(solvedEdges);
@@ -160,9 +165,7 @@ public class CubeStateHandler extends BasicTurnOperations {
     }
 
     public void affectCubeState(List<String> moves) {
-        for (String move : moves) {
-            affectCubeState(move);
-        }
+        moves.forEach(this::affectCubeState);
     }
 
     public void countIncorrectElements() {
@@ -172,8 +175,12 @@ public class CubeStateHandler extends BasicTurnOperations {
                 char[] temp2 = solvedCorners.get(el.getKey()).clone();
                 Arrays.sort(temp1);
                 Arrays.sort(temp2);
-                if (Arrays.equals(temp1, temp2)) twistedCorners++;
-                else incorrectCorners++;
+                if (Arrays.equals(temp1, temp2)) {
+                    twistedCorners++;
+                }
+                else {
+                    incorrectCorners++;
+                }
             }
         }
 
@@ -183,8 +190,12 @@ public class CubeStateHandler extends BasicTurnOperations {
                 char[] temp2 = solvedEdges.get(el.getKey()).clone();
                 Arrays.sort(temp1);
                 Arrays.sort(temp2);
-                if (Arrays.equals(temp1, temp2)) flippedEdges++;
-                else incorrectEdges++;
+                if (Arrays.equals(temp1, temp2)) {
+                    flippedEdges++;
+                }
+                else {
+                    incorrectEdges++;
+                }
             }
         }
     }

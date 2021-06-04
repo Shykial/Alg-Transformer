@@ -1,25 +1,22 @@
-package com.company;
+package com.algtransformer;
 
-abstract class BasicTurnOperations {
+public abstract class BasicTurnOperations {
     public static int getDegreeFlag(String move) {
 
-        if (move.length() == 0) return 0; //0 gdy nie ma ruchu
-        if (!(move.contains("'") || move.contains("2"))) return 1; //1 gdy nie ma ani prima ani dwojki
+        if (move.length() == 0) return 0;
+        if (!(move.contains("'") || move.contains("2"))) return 1;
 
         return switch (move.charAt(move.length() - 1)) {
             case '\'' -> -1;
             case '2' -> 2;
             default -> throw new IllegalArgumentException("Move flag exception");
         };
-
     }
 
     public static String getAxis(String move) {
+        if (move.length() == 0) return "";
 
-        if (move.length() == 0) return ""; //0 gdy nie ma ruchu
-        if (move.contains("'") || move.contains("2"))
-            return move.substring(0, move.length() - 1); //1 gdy nie ma ani prima ani dwojki
-        else return move;
+        return (move.contains("'") || move.contains("2")) ? move.substring(0, move.length() - 1) : move;
     }
 
     public static String addDegreeFlags(String move, int x) {
